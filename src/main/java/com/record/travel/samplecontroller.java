@@ -1,13 +1,18 @@
 package com.record.travel;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+import lombok.extern.log4j.Log4j2;
+
+@Controller
+@RequestMapping("/*")
+@Log4j2
 public class samplecontroller {
 
 	@GetMapping("/hello")
-	public String[] hello() {
-		return new String[] {"hello", "World"};
+	public void hello() {
+		log.info("Hello!");
 	}
 }
