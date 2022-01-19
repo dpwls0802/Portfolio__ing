@@ -33,6 +33,8 @@ public class QTravelrecord extends EntityPathBase<Travelrecord> {
 
     public final NumberPath<Long> tnum = createNumber("tnum", Long.class);
 
+    public final StringPath travelDate = createString("travelDate");
+
     public final StringPath writer = createString("writer");
 
     public QTravelrecord(String variable) {

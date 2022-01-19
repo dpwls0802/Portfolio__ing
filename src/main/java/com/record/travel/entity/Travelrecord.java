@@ -27,9 +27,24 @@ public class Travelrecord extends BaseEntity {
 	@Column(length=100, nullable=false)
 	private String title;
 	
-	@Column(length=500, nullable=false)
+	@Column(length=1000, nullable=false)
 	private String content;
 	
 	@Column(length=50, nullable=false)
 	private String writer;
+	
+	@Column(length=100, nullable=false)
+	private String travelDate;
+	
+	public void changTitle(String title) {
+		this.title = title;
+	}
+	
+	public void changeContent(String content) {
+		this.content = content;
+	}
+	
+	public void changeTravelDate(String travelDate) {
+		this.travelDate = travelDate;
+	}
 }
