@@ -18,5 +18,5 @@ public class TravelrecordDTO {
 	private String content;
 	private String writer;
 	private String travelDate;
-	private LocalDateTime redDate, modDate;
+	private LocalDateTime regDate, modDate;
 }
