@@ -1,7 +1,14 @@
 package com.record.travel.service;
 
+import java.util.function.Function;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.record.travel.dto.PageRequestDTO;
+import com.record.travel.dto.PageResultDTO;
 import com.record.travel.dto.TravelrecordDTO;
 import com.record.travel.entity.Travelrecord;
 import com.record.travel.repository.TravelrecordRepository;
@@ -16,6 +23,7 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 	
 	private final TravelrecordRepository repository; //JPA 처리 위해 주입
 	
+	//등록
 	@Override
 	public Long register(TravelrecordDTO dto) {
 		log.info("===============");
@@ -28,4 +36,16 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 		
 		return entity.getTnum();
 	}
+	
+	//목록
+	@Override
+	public PageResultDTO<TravelrecordDTO, Travelrecord> getList(PageRequestDTO requestDTO) {
+		Pageable pageable = requestDTO.getPageable(Sort.by("tnum").descending());
+		Page<Travelrecord> result = repository.findAll(pageable);
+		
+		Function<Travelrecord, TravelrecordDTO> fn = (entity -> entityToDto(entity));
+		return new PageResultDTO<>(result, fn);
+	}
+	
+	
 }

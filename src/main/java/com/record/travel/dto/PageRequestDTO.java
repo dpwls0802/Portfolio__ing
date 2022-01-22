@@ -1,7 +1,5 @@
 package com.record.travel.dto;
 
-import java.awt.print.Pageable;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
@@ -22,7 +20,7 @@ public class PageRequestDTO {
 		this.size = 8;
 	}
 	
-	public Pageable getPageable(Sort sort) {
-		return (Pageable) PageRequest.of(page-1, size, sort);
+	public PageRequest getPageable(Sort sort) {
+		return PageRequest.of(page -1, size, sort);
 	}
 }
