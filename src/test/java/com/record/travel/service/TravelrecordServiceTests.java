@@ -31,8 +31,18 @@ public class TravelrecordServiceTests {
 		PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(8).build();
 		//페이지결과
 		PageResultDTO<TravelrecordDTO, Travelrecord> resultDTO = service.getList(pageRequestDTO);
+		
+		System.out.println("이전:"+resultDTO.isPrev());
+		System.out.println("다음:"+resultDTO.isNext());
+		System.out.println("전체:"+resultDTO.getTotalPage());
+		
+		System.out.println("=========================");
 		for(TravelrecordDTO travelrecordDTO : resultDTO.getDtoList()) {
 			System.out.println(travelrecordDTO);
+			
 		}
+		
+		System.out.println("=========================");
+		resultDTO.getPageList().forEach(i -> System.out.println(i));
 	}
 }
