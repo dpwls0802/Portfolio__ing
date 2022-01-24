@@ -1,5 +1,6 @@
 package com.record.travel.service;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
@@ -45,6 +46,14 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 		
 		Function<Travelrecord, TravelrecordDTO> fn = (entity -> entityToDto(entity));
 		return new PageResultDTO<>(result, fn);
+	}
+	
+	//조회
+	@Override
+	public TravelrecordDTO read(Long tnum) {
+		Optional<Travelrecord> result = repository.findById(tnum);
+		
+		return result.isPresent()? entityToDto(result.get()) : null;
 	}
 	
 	
