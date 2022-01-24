@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Travel Record</title>
+<link th:href="@{/css/register.css}" rel="stylesheet" />
+<link th:href="@{/css/navigationBar.css}" rel="stylesheet" />
+</head>
+<body>
+	<!-- 내비게이션 바 -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="/">Travel Record</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link" aria-current="page"
+						href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="/blog/listPost?page=1&perPageNum=8">record</a></li>
+					<!-- <li class="nav-item"><sec:authorize access="isAnonymous()">
+							<a class="nav-link" href="/member/loginPage">Login</a>
+						</sec:authorize></li>
+					<li class="nav-item"><sec:authorize access="isAnonymous()">
+							<a class="nav-link" href="/member/signUp">Sign up</a>
+						</sec:authorize></li>
+					<li class="nav-item"><sec:authorize access="isAuthenticated()">
+							<span class="nav-link" style="font-weight: bold;"><sec:authentication
+									property="principal.customName" />님</span>
+						</sec:authorize></li>
+					<li class="nav-item"><sec:authorize access="isAuthenticated()">
+							<a class="nav-link" href="/member/logout">Logout</a>
+						</sec:authorize></li> -->
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- 게시글 등록 -->
+	<form th:action="@{/travelrecord/register}" th:method="post">
+		<div class="form-group">
+			<h3 style="margin-bottom: 20px;">여행기록 작성</h3>
+			<label class="labels">작성자 : </label> <input class="form-control"
+				type="text" name="writer">
+		</div>
+		<div class="form-group">
+			<label class="labels">나라 : </label> <input class="form-control"
+				type="text" name="title" placeholder="첫 글자는 대문자인 영어로만 작성해주세요">
+		</div>
+		<div class="form-group">
+			<label class="labels">여행기간 : </label> <input class="form-control"
+				type="text" name="travelDate"
+				placeholder="0000-00-00~0000-00-00으로 입력해주세요">
+		</div>
+		<div class="form-group">
+			<label class="labels">내용 : </label>
+			<textarea class="form-control" name="content" rows="2" cols="50"></textarea>
+		</div>
+		
+		<!-- 버튼 -->
+		<div class="form-group">
+			<button class="btn" type="submit">등록</button>
+		</div>
+	</form>
+	
+	<!-- Footer-->
+	<footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Yejin 2022</p></div>
+        </footer>
+</body>
+</html>

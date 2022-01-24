@@ -3,9 +3,12 @@ package com.record.travel.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.record.travel.dto.PageRequestDTO;
+import com.record.travel.dto.TravelrecordDTO;
 import com.record.travel.service.TravelrecordService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,8 +31,16 @@ public class TravelrecordController {
 	
 	//등록
 	@GetMapping("/register")
-	public String register() {
-		log.info("=============register=========");
-		return "/travelrecord/register";
+	public void register() {
+		log.info("=============register===========");
+	}
+	
+	@PostMapping("/register")
+	public String registPost(TravelrecordDTO dto, RedirectAttributes redirectAttributes) {
+		log.info("dto : " + dto);
+		Long tnum = service.register(dto);
+		redirectAttributes.addFlashAttribute("msg", tnum);
+		
+		return "redirect:/travelrecord/list";
 	}
 }
