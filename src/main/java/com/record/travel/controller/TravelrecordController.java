@@ -53,6 +53,20 @@ public class TravelrecordController {
 		model.addAttribute("dto", dto);
 	}
 	
+	//수정
+	@PostMapping("/modify")
+	public String modifyPost(TravelrecordDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+		log.info("글 수정!!===============");
+		log.info("dto : " + dto);
+		
+		service.modify(dto);
+		
+		redirectAttributes.addAttribute("page", requestDTO.getPage());
+		redirectAttributes.addAttribute("tnum", dto.getTnum());
+		
+		return "redirect:/travelrecord/read";
+	}
+	
 	//삭제
 	@PostMapping
 	public String remove(long tnum, RedirectAttributes redirectAttributes) {

@@ -6,6 +6,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>Travel Record</title>
 <link th:href="@{/css/modify.css}" rel="stylesheet" />
+<link th:href="@{/css/navigationBar.css}" rel="stylesheet" />
 </head>
 <body>
 	<!-- 반응형 내비게이션 바 -->
@@ -35,6 +36,9 @@
      <form th:action="@{/travelrecord/modify}" th:method="post">
 		<div class="form-group">
 			<h3 style="margin-bottom: 20px;">여행기록 수정</h3>
+			
+			<!-- 페이지 번호 -->
+			<input type="hidden" name="page" th:value="$P{requestDTO.page"}>
 			
 			<label class="labels">작성자 : </label> 
 			<input class="form-control" type="text" name="writer" th:value="${dto.writer}" readonly>
@@ -70,6 +74,20 @@
      	<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
      </footer>
      
+     <script th:inline="javascript">
+        
+        <!-- 수정 버튼 -->
+     	var modifyForm = $("form");
+     	
+     	$("#modifyBtn").click(function() {
+     		if(!confirm("수정하시겠습니까?")) {
+     			return;
+     		}
+     		modifyForm.attr("action", "/travelrecord/modify").attr("method", "post");
+     		
+     		modifyForm.submit();
+     	});
+     	</script>
      
 </body>
 </html>

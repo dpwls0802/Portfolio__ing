@@ -163,13 +163,15 @@
         <!-- Core theme JS-->
         <script th:src="@{js/read.js}"></script>
         <script th:inline="javascript">
+        
+        <!-- 삭제 버튼 -->
      	var readForm = $("form");
      	
      	$("#removeBtn").click(function() {
      		readForm.attr("action", "/travelrecord/remove").attr("method", "post");
      		
      		readForm.submit();
-     	})
-     </script>
+     	});
+     	</script>
     </body>
 </html>
