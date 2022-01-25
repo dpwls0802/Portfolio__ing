@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Travel Record</title>
+<link th:href="@{/css/modify.css}" rel="stylesheet" />
+</head>
+<body>
+	<!-- 반응형 내비게이션 바 -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                <button class="navbar-toggler" type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+     
+     <!-- 페이지 수정 -->
+     <form th:action="@{/travelrecord/modify}" th:method="post">
+		<div class="form-group">
+			<h3 style="margin-bottom: 20px;">여행기록 수정</h3>
+			
+			<label class="labels">작성자 : </label> 
+			<input class="form-control" type="text" name="writer" th:value="${dto.writer}" readonly>
+		</div>
+		<div class="form-group">
+			<label class="labels">나라 : </label> 
+			<input class="form-control"
+				type="text" name="title" placeholder="첫 글자는 대문자인 영어로만 작성해주세요" th:value="${dto.title}">
+		</div>
+		<div class="form-group">
+			<label class="labels">여행기간 : </label> 
+			<input class="form-control"
+				type="text" name="travelDate"
+				placeholder="0000-00-00~0000-00-00으로 입력해주세요" th:value="${dto.travelDate}">
+		</div>
+		<div class="form-group">
+			<label class="labels">내용 : </label>
+			<textarea class="form-control" name="content" rows="2" cols="50">[[${dto.content}]]</textarea>
+		</div>
+		
+		<!-- 버튼 -->
+		<div class="form-group">
+			<button class="btn" type="submit" id='modifyBtn'>수정 등록</button>
+			<button class="btn" type="reset" id="resetBtn">초기화</button>
+			<a th:href="@{/travelrecord/list(tnum=${dto.tnum}, page=${requestDTO.page})}">
+             	<button class="btn" data-oper="listPost" id='listBtn'>목록</button>
+            </a>
+		</div>
+	</form>
+	
+	<!-- Footer-->
+    <footer class="py-5 bg-dark">
+     	<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
+     </footer>
+     
+     
+</body>
+</html>

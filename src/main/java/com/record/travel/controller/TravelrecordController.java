@@ -45,12 +45,21 @@ public class TravelrecordController {
 		return "redirect:/travelrecord/list";
 	}
 	
-	//조회
-	@GetMapping("/read")
+	//조회, 수정
+	@GetMapping({"/read", "/modify"})
 	public void read(long tnum, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
 		log.info("tnum : " + tnum);
 		TravelrecordDTO dto = service.read(tnum);
 		model.addAttribute("dto", dto);
+	}
+	
+	//삭제
+	@PostMapping
+	public String remove(long tnum, RedirectAttributes redirectAttributes) {
+		log.info("tnum : " + tnum);
+		service.remove(tnum);
+		redirectAttributes.addFlashAttribute("msg", tnum);
 		
+		return "redirect:/travelrecord/list";
 	}
 }

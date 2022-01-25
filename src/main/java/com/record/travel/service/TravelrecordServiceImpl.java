@@ -56,5 +56,27 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 		return result.isPresent()? entityToDto(result.get()) : null;
 	}
 	
+	//수정
+	@Override
+	public void modify(TravelrecordDTO dto) {
+		Optional<Travelrecord> result = repository.findById(dto.getTnum());
+		
+		if(result.isPresent()) {
+			Travelrecord entity = result.get();
+			entity.changTitle(dto.getTitle());
+			entity.changeContent(dto.getContent());
+			entity.changeTravelDate(dto.getTravelDate());
+			
+			repository.save(entity);
+		}
+	}
+
+	//삭제
+	@Override
+	public void remove(Long tnum) {
+		repository.deleteById(tnum);
+		
+	}
+	
 	
 }

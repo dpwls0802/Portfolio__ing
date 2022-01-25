@@ -66,12 +66,16 @@
 		<!-- 버튼 -->
 		<div class="form-group">
 			<button class="btn" type="submit">등록</button>
+			<button class="btn" type="reset" id="resetBtn">초기화</button>
+			<a th:href="@{/travelrecord/list(tnum=${dto.tnum}, page=${requestDTO.page})}">
+            	<button class="btn" data-oper="listPost" id='listBtn'>목록</button>
+            </a>
 		</div>
 	</form>
 	
 	<!-- Footer-->
 	<footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Yejin 2022</p></div>
-        </footer>
+     	<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Yejin 2022</p></div>
+     </footer>
 </body>
 </html>
