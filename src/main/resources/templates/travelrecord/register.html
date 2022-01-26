@@ -27,7 +27,7 @@
 		
 		<!-- 버튼 -->
 		<div class="form-group">
-			<button class="btn" type="submit" style="background-color: yellow;">등록</button>
+			<button class="btn" type="submit" id="registerBtn"style="background-color: yellow;">등록</button>
 			<button class="btn" type="reset" id="resetBtn">초기화</button>
 			<!-- <a th:href="@{/travelrecord/list(tnum=${dto.tnum}, page=${requestDTO.page})}">
             	<button class="btn" data-oper="listPost" id='listBtn'>목록</button>
@@ -35,5 +35,14 @@
 		</div>
 	</form>
      
+     <script th:inline="javascript">
+     	var registerForm = $("form");
+     	
+     	$("#registerBtn").click(function() {
+     		if(!confirm("등록하시겠습니까?")) {
+     			return;
+     		}
+     	});
+     </script>
 	</th:block>
 </th:block>

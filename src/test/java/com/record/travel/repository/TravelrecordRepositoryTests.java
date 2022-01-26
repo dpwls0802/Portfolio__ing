@@ -15,7 +15,7 @@ public class TravelrecordRepositoryTests {
 	private TravelrecordRepository travelrecordRepository;
 
 	// 등록
-	@Test
+	//@Test
 	public void insert() {
 		IntStream.rangeClosed(1, 100).forEach(i -> {
 			Travelrecord travelrecord = Travelrecord.builder().title(i + "번째 제목").content(i + "번째 내용")
@@ -53,7 +53,7 @@ public class TravelrecordRepositoryTests {
 	}
 
 	// 전체 삭제
-	//@Test
+	@Test
 	public void deleteAll() {
 		travelrecordRepository.deleteAll();
 	}
