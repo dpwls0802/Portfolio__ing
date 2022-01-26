@@ -7320,7 +7320,7 @@ textarea.form-control-lg {
 }
 
 .mt-5 {
-  margin-top: 3rem !important;
+  margin-top: 1rem !important;
 }
 
 .mt-auto {
@@ -9784,8 +9784,8 @@ textarea.form-control-lg {
   }
 
   .px-lg-5 {
-    padding-right: 3rem !important;
-    padding-left: 3rem !important;
+    /* padding-right: 3rem !important;
+    padding-left: 3rem !important; */
   }
 
   .py-lg-0 {

@@ -7491,8 +7491,8 @@ textarea.form-control-lg {
 }
 
 .py-5 {
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
+  /* padding-top: 3rem !important;
+  padding-bottom: 3rem !important */;
 }
 
 .pt-0 {
@@ -7771,8 +7771,8 @@ textarea.form-control-lg {
 
 .text-muted {
   --bs-text-opacity: 1;
-  color: #6c757d !important;
-}
+  /* color: #6c757d !important;
+ */}
 
 .text-black-50 {
   --bs-text-opacity: 1;

@@ -1,47 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://wwww.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<title>Travel Record</title>
+<th:block th:replace="~{/layout/layout1 :: setContent(~{this::content} )}">
+	<th:block th:fragment="content">
 <link th:href="@{/css/register.css}" rel="stylesheet" />
-<link th:href="@{/css/navigationBar.css}" rel="stylesheet" />
-</head>
-<body>
-	<!-- 내비게이션 바 -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container">
-			<a class="navbar-brand" href="/">Travel Record</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link" aria-current="page"
-						href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="/blog/listPost?page=1&perPageNum=8">record</a></li>
-					<!-- <li class="nav-item"><sec:authorize access="isAnonymous()">
-							<a class="nav-link" href="/member/loginPage">Login</a>
-						</sec:authorize></li>
-					<li class="nav-item"><sec:authorize access="isAnonymous()">
-							<a class="nav-link" href="/member/signUp">Sign up</a>
-						</sec:authorize></li>
-					<li class="nav-item"><sec:authorize access="isAuthenticated()">
-							<span class="nav-link" style="font-weight: bold;"><sec:authentication
-									property="principal.customName" />님</span>
-						</sec:authorize></li>
-					<li class="nav-item"><sec:authorize access="isAuthenticated()">
-							<a class="nav-link" href="/member/logout">Logout</a>
-						</sec:authorize></li> -->
-				</ul>
-			</div>
-		</div>
-	</nav>
+
 	<!-- 게시글 등록 -->
 	<form th:action="@{/travelrecord/register}" th:method="post">
 		<div class="form-group">
@@ -65,17 +27,13 @@
 		
 		<!-- 버튼 -->
 		<div class="form-group">
-			<button class="btn" type="submit">등록</button>
+			<button class="btn" type="submit" style="background-color: yellow;">등록</button>
 			<button class="btn" type="reset" id="resetBtn">초기화</button>
-			<a th:href="@{/travelrecord/list(tnum=${dto.tnum}, page=${requestDTO.page})}">
+			<!-- <a th:href="@{/travelrecord/list(tnum=${dto.tnum}, page=${requestDTO.page})}">
             	<button class="btn" data-oper="listPost" id='listBtn'>목록</button>
-            </a>
+            </a> -->
 		</div>
 	</form>
-	
-	<!-- Footer-->
-	<footer class="py-5 bg-dark">
-     	<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Yejin 2022</p></div>
-     </footer>
-</body>
-</html>
+     
+	</th:block>
+</th:block>

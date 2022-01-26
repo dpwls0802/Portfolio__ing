@@ -37,6 +37,11 @@ label.labels {
 	background-color: #48b4db;
 }
 
+#removeBtn {
+	background-color: red;
+	margin-right: 85%;
+}
+
 /* 해시태그 */
 #tag-list {
 	margin-left:120px;

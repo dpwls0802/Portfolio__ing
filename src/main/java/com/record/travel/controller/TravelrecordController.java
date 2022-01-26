@@ -68,7 +68,7 @@ public class TravelrecordController {
 	}
 	
 	//삭제
-	@PostMapping
+	@PostMapping("/remove")
 	public String remove(long tnum, RedirectAttributes redirectAttributes) {
 		log.info("tnum : " + tnum);
 		service.remove(tnum);
