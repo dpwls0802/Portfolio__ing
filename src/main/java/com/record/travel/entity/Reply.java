@@ -29,6 +29,6 @@ public class Reply extends BaseEntity {
 	private String replyer;
 
 	@ManyToOne
-	private Travelrecords travelrecord;
+	private Travelrecord travelrecord;
 
 }

@@ -18,7 +18,7 @@ import lombok.ToString;
 public class User extends BaseEntity{
 	
 	@Id
-	private String Email;
+	private String email;
 	
 	private String password;
 	private String name;

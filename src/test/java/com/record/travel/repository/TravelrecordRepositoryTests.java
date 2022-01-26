@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.record.travel.entity.Travelrecord;
+import com.record.travel.entity.User;
 
 @SpringBootTest
 public class TravelrecordRepositoryTests {
@@ -15,11 +16,13 @@ public class TravelrecordRepositoryTests {
 	private TravelrecordRepository travelrecordRepository;
 
 	// 등록
-	//@Test
-	public void insert() {
+	@Test
+	public void insertTravelrecord() {
 		IntStream.rangeClosed(1, 100).forEach(i -> {
+			User user = User.builder().email("사용자 이메일 : " + i + "@abc.com").build();
+
 			Travelrecord travelrecord = Travelrecord.builder().title(i + "번째 제목").content(i + "번째 내용")
-					.writer((i % 10) + "번째 작성자").travelDate("2021-01-" + (i % 10) + " ~ 2021-02-0" + (i % 10)).build();
+					.writer(user).travelDate("2021-01-" + (i % 10) + " ~ 2021-02-0" + (i % 10)).build();
 			System.out.println(travelrecordRepository.save(travelrecord));
 		});
 	}
@@ -53,7 +56,7 @@ public class TravelrecordRepositoryTests {
 	}
 
 	// 전체 삭제
-	@Test
+	//@Test
 	public void deleteAll() {
 		travelrecordRepository.deleteAll();
 	}
