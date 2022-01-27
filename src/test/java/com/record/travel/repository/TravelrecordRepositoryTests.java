@@ -3,6 +3,8 @@ package com.record.travel.repository;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +18,7 @@ public class TravelrecordRepositoryTests {
 	private TravelrecordRepository travelrecordRepository;
 
 	// 등록
-	@Test
+	//@Test
 	public void insertTravelrecord() {
 		IntStream.rangeClosed(1, 100).forEach(i -> {
 			User user = User.builder().email("사용자 이메일 : " + i + "@abc.com").build();
@@ -28,15 +30,15 @@ public class TravelrecordRepositoryTests {
 	}
 
 	// 조회
-	// @Test
-	public void select() {
-		Long tnum = 400L;
+	@Transactional //지연 로딩을 적용해 User테이블과 연결이 끊김 -> 트랜잭션으로 처리해 다시 연결 
+	@Test
+	public void selectTravelrecord() {
+		Long tnum = 100L;
 		Optional<Travelrecord> result = travelrecordRepository.findById(tnum);
-
-		if (result.isPresent()) {
-			Travelrecord travelrecord = result.get();
-			System.out.println(travelrecord);
-		}
+		
+		Travelrecord travelrecord = result.get();
+		System.out.println(travelrecord);
+		System.out.println(travelrecord.getWriter());
 	}
 
 	// 수정

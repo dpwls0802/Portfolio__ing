@@ -2,6 +2,7 @@ package com.record.travel.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Travelrecord extends BaseEntity {
 	@Column(length=1000, nullable=false)
 	private String content;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY) //지연 로딩을 사용해 조인으로 인한 성능 저하 방지.
 	private User writer;
 	
 	@Column(length=100, nullable=false)
