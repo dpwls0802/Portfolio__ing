@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +11,7 @@ import com.record.travel.dto.PageRequestDTO;
 import com.record.travel.dto.PageResultDTO;
 import com.record.travel.dto.TravelrecordDTO;
 import com.record.travel.entity.Travelrecord;
+import com.record.travel.entity.User;
 import com.record.travel.repository.TravelrecordRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -40,11 +40,13 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 	
 	//목록
 	@Override
-	public PageResultDTO<TravelrecordDTO, Travelrecord> getList(PageRequestDTO requestDTO) {
-		Pageable pageable = requestDTO.getPageable(Sort.by("tnum").descending());
-		Page<Travelrecord> result = repository.findAll(pageable);
+	public PageResultDTO<TravelrecordDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
 		
-		Function<Travelrecord, TravelrecordDTO> fn = (entity -> entityToDto(entity));
+		
+		Function<Object[], TravelrecordDTO> fn = (entity -> entityToDto((Travelrecord).entity[0], (User)entity[1], (Long)entity[2]));
+		
+		Page<Object[]> result = repository.getTravelrecordWithReplyCount(pageRequestDTO.getPageable(Sort.by("tnum").descending()));
+		
 		return new PageResultDTO<>(result, fn);
 	}
 	

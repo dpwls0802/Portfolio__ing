@@ -16,16 +16,16 @@ public class TravelrecordServiceTests {
 	private TravelrecordService service;
 
 	//등록
-	//@Test
+	@Test
 	public void register() {
-		TravelrecordDTO travelrecordDTO = TravelrecordDTO.builder().title("제목 테스트").content("내용 테스트").writer("작성자 테스트")
+		TravelrecordDTO travelrecordDTO = TravelrecordDTO.builder().title("제목 테스트").content("내용 테스트").writerEmail("1@abc.com")
 				.travelDate("여행기간 테스트").build();
 		
 		System.out.println(service.register(travelrecordDTO));
 	}
 	
 	//목록
-	@Test
+	//@Test
 	public void list() {
 		//페이지요청
 		PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(8).build();
