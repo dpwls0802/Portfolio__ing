@@ -14,13 +14,13 @@ public interface TravelrecordService {
 	PageResultDTO<TravelrecordDTO, Object[]> getList(PageRequestDTO requestDTO);
 
 	// 조회
-	/* TravelrecordDTO read(Long tnum); */
+	TravelrecordDTO read(Long tnum); 
 
 	// 수정
 	void modify(TravelrecordDTO dto);
 
-	// 삭제
-	void remove(Long tnum);
+	// 삭제 (글 + 댓글)
+	void removeWithReply(Long tnum);
 
 	// 서비스 계층에서 파라미터를 DTO 타입으로 받기 때문에 JPA로 처리하기 위해 엔티티 타입의 객체로 변환해야 함
 	// DTO -> entity로 변환
