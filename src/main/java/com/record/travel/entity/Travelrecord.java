@@ -1,5 +1,6 @@
 package com.record.travel.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +33,7 @@ public class Travelrecord extends BaseEntity {
 	@Column(length=1000, nullable=false)
 	private String content;
 	
-	@ManyToOne(fetch = FetchType.LAZY) //지연 로딩을 사용해 조인으로 인한 성능 저하 방지.
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //지연 로딩을 사용해 조인으로 인한 성능 저하 방지.
 	private User writer;
 	
 	@Column(length=100, nullable=false)

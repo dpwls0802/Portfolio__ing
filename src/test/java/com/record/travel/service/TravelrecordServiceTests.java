@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.record.travel.dto.PageRequestDTO;
 import com.record.travel.dto.PageResultDTO;
 import com.record.travel.dto.TravelrecordDTO;
-import com.record.travel.entity.Travelrecord;
 
 @SpringBootTest
 public class TravelrecordServiceTests {
@@ -21,28 +20,21 @@ public class TravelrecordServiceTests {
 		TravelrecordDTO travelrecordDTO = TravelrecordDTO.builder().title("제목 테스트").content("내용 테스트").writerEmail("1@abc.com")
 				.travelDate("여행기간 테스트").build();
 		
-		System.out.println(service.register(travelrecordDTO));
+		Long tnum = service.register(travelrecordDTO);
 	}
 	
 	//목록
 	//@Test
 	public void list() {
 		//페이지요청
-		PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(8).build();
+		PageRequestDTO pageRequestDTO = new PageRequestDTO();
 		//페이지결과
-		PageResultDTO<TravelrecordDTO, Travelrecord> resultDTO = service.getList(pageRequestDTO);
-		
-		System.out.println("이전:"+resultDTO.isPrev());
-		System.out.println("다음:"+resultDTO.isNext());
-		System.out.println("전체:"+resultDTO.getTotalPage());
+		PageResultDTO<TravelrecordDTO, Object[]> resultDTO = service.getList(pageRequestDTO);
 		
 		System.out.println("=========================");
 		for(TravelrecordDTO travelrecordDTO : resultDTO.getDtoList()) {
 			System.out.println(travelrecordDTO);
 			
 		}
-		
-		System.out.println("=========================");
-		resultDTO.getPageList().forEach(i -> System.out.println(i));
 	}
 }

@@ -14,7 +14,7 @@ public interface TravelrecordService {
 	PageResultDTO<TravelrecordDTO, Object[]> getList(PageRequestDTO requestDTO);
 
 	// 조회
-	TravelrecordDTO read(Long tnum);
+	/* TravelrecordDTO read(Long tnum); */
 
 	// 수정
 	void modify(TravelrecordDTO dto);

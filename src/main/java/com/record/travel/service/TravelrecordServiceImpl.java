@@ -42,8 +42,7 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 	@Override
 	public PageResultDTO<TravelrecordDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
 		
-		
-		Function<Object[], TravelrecordDTO> fn = (entity -> entityToDto((Travelrecord).entity[0], (User)entity[1], (Long)entity[2]));
+		Function<Object[], TravelrecordDTO> fn = (entity -> entityToDto((Travelrecord)entity[0], (User)entity[1], (Long)entity[2]));
 		
 		Page<Object[]> result = repository.getTravelrecordWithReplyCount(pageRequestDTO.getPageable(Sort.by("tnum").descending()));
 		
@@ -51,12 +50,12 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 	}
 	
 	//조회
-	@Override
-	public TravelrecordDTO read(Long tnum) {
-		Optional<Travelrecord> result = repository.findById(tnum);
-		
-		return result.isPresent()? entityToDto(result.get()) : null;
-	}
+	/*
+	 * @Override public TravelrecordDTO read(Long tnum) { Optional<Travelrecord>
+	 * result = repository.findById(tnum);
+	 * 
+	 * return result.isPresent()? entityToDto(result.get()) : null; }
+	 */
 	
 	//수정
 	@Override
