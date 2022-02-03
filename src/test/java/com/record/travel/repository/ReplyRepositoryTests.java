@@ -17,11 +17,11 @@ public class ReplyRepositoryTests {
 	ReplyRepository replyRepository;
 	
 	//댓글 등록(더미)
-	//@Test
+	@Test
 	public void insertReply() {
 		
-		IntStream.rangeClosed(1, 200).forEach(i -> {
-			long tnum = (long)(Math.random() * 100) + 1;
+		IntStream.rangeClosed(301, 400).forEach(i -> {
+			long tnum = (long)(Math.random() * 100) + 100;
 			Travelrecord travelrecord = Travelrecord.builder().tnum(tnum).build();
 			
 			Reply reply = Reply.builder().replyText(i+"번째 댓글 내용").replyer("게스트").travelrecord(travelrecord).build();
@@ -30,7 +30,7 @@ public class ReplyRepositoryTests {
 	}
 	
 	//댓글 목록 조회
-	@Test
+	//@Test
 	public void listByTravelrecord() {
 		List<Reply> replyList = replyRepository.getReplyByTravelrecord(Travelrecord.builder().tnum(21L).build());
 		
