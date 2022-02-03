@@ -35,10 +35,12 @@
 									<!-- 나라 이름(title) -->
 									<h5 class="fw-bolder">[[${dto.title}]]</h5>
 
-									<!-- 여행 기긴 (Traveldate) -->
+									<!-- 여행 기간 (Traveldate) -->
 									<p style="margin-bottom: 13px;">[[${dto.travelDate}]]</p>
 									<!-- 작성자(writer) -->
-									<span style="margin-bottom: 3px;">[[${dto.writer}]]</span>
+									<span style="margin-bottom: 3px;">[[${dto.writerName}]]</span>
+									<input type="hidden" name="writerEmail" th:value="${dto.writerEmail}">
+									<span class="badgeReply">💬[[${dto.replyCount}]]</span>
 								</div>
 							</div>
 

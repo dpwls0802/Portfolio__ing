@@ -13,9 +13,12 @@
 			<input type="hidden" name="page" th:value="${requestDTO.page}">
 			<!-- 번호 -->
 			<input type="hidden" name="tnum" th:value="${dto.tnum}">
+			<!-- 작성자 이메일 -->
 			
 			<label class="labels">작성자 : </label> 
-			<input class="form-control" type="text" name="writer" th:value="${dto.writer}" readonly>
+			<input class="form-control" type="text" name="writerName" th:value="${dto.writerName}" readonly>
+			<label class="labels">작성자 이메일 : </label> 
+			<input class="form-control" type="email" name="writerEmail" th:value="${dto.writerEmail}" readonly>
 		</div>
 		<div class="form-group">
 			<label class="labels">나라 : </label> 
@@ -44,10 +47,10 @@
 	</div>
 	
      <script th:inline="javascript">
-     
-        <!-- 수정 버튼 -->
+        
      	var modifyForm = $("form");
      	
+     	<!-- 수정 버튼 -->
      	$("#modifyBtn").click(function() {
      		if(!confirm("수정하시겠습니까?")) {
      			return;
@@ -59,13 +62,13 @@
      	
      	<!-- 목록 버튼 -->
      	$("#listBtn").click(function() {
-     		modifyForm.attr("action", "/travelrecord/list").attr("method", "get");
      		
      		var pageInfo = $("input[name='page']");
      		
      		modifyForm.empty();
      		modifyForm.append(pageInfo);
      		
+     		modifyForm.attr("action", "/travelrecord/list").attr("method", "get");
      		modifyForm.submit();
      	});
      	

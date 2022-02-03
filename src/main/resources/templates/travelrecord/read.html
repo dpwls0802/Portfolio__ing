@@ -16,7 +16,7 @@
                         	<input type="hidden" name="tnum" th:value="${dto.tnum}">
                         
                             <div class="text-muted mb-2" id="country">나라 : [[${dto.title}]]</div>
-							<div class="text-muted mb-2">작성자 : [[${dto.writer}]]</div>
+							<div class="text-muted mb-2">작성자 : [[${dto.writerName}]]</div>
 							<div class="text-muted mb-2">여행기간 : [[${dto.travelDate}]]</div>
 							<div class="text-muted mb-2" id="writeDate">
 								작성일 : [[${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm')}]]

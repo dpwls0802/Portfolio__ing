@@ -71,7 +71,7 @@ public class TravelrecordController {
 	@PostMapping("/remove")
 	public String remove(long tnum, RedirectAttributes redirectAttributes) {
 		log.info("tnum : " + tnum);
-		service.remove(tnum);
+		service.removeWithReply(tnum);
 		redirectAttributes.addFlashAttribute("msg", tnum);
 		
 		return "redirect:/travelrecord/list";
