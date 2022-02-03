@@ -1,6 +1,7 @@
 package com.record.travel.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Reply extends BaseEntity {
 	private String replyText;
 	private String replyer;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Travelrecord travelrecord;
 
 }

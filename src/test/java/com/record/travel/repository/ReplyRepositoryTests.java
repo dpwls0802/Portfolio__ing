@@ -1,5 +1,6 @@
 package com.record.travel.repository;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,8 @@ public class ReplyRepositoryTests {
 	@Autowired
 	ReplyRepository replyRepository;
 	
-	@Test
+	//댓글 등록(더미)
+	//@Test
 	public void insertReply() {
 		
 		IntStream.rangeClosed(1, 200).forEach(i -> {
@@ -25,6 +27,14 @@ public class ReplyRepositoryTests {
 			Reply reply = Reply.builder().replyText(i+"번째 댓글 내용").replyer("게스트").travelrecord(travelrecord).build();
 			replyRepository.save(reply);
 		});
+	}
+	
+	//댓글 목록 조회
+	@Test
+	public void listByTravelrecord() {
+		List<Reply> replyList = replyRepository.getReplyByTravelrecord(Travelrecord.builder().tnum(21L).build());
+		
+		replyList.forEach(reply -> System.out.println(reply));
 	}
 	
 }

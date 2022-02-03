@@ -44,7 +44,6 @@ public class TravelrecordController {
 		
 		return "redirect:/travelrecord/list";
 	}
-	
 	//조회, 수정
 	@GetMapping({"/read", "/modify"})
 	public void read(long tnum, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
