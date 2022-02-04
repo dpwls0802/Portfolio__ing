@@ -55,25 +55,19 @@
                                 <!-- 댓글 작성 부분 -->
                                 <form class="mb-4">
                                 	<p style="margin-bottom: 3px; font-weight: bold;">✏댓글 작성</p>
-                                	<input id="newReplyWriter2" type="text" name="replyer">
+                                	<input id="newReplyer" type="text" name="replyer" style="padding: 1px 6px 1px 6px;">
+                                	<input type="hidden" name="rnum" >
                                 	<button type="button" style="margin-bottom: 5px;"
 												id="writeReplyBtn" class='btn btn-primary btn-xs pull-right'>댓글 등록</button>
-                                	<textarea class="form-control" rows="3" placeholder="댓글을 입력해주세요"></textarea>
+                                	<textarea id="newReplyText" class="form-control" rows="3" name="replyText" placeholder="댓글을 입력해주세요" style="padding : 6px 6px 6px 6px;"></textarea>
                                 </form>
                                 
                                 <!-- 댓글 목록 부분 -->
-                                <p class = "replyCount" style="margin-bottom: 10px; font-weight: bold;">📄댓글 목록 [[${dto.replyCount}]]</p>
+                                <p class = "replyCount" style="margin-bottom: 10px; font-weight: bold;">📄댓글 목록 [ [[${dto.replyCount}]] ]</p>
                                 
-                                <!-- Single comment-->
-                                <!-- <div class="d-flex">
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
-                                    </div>
-                                </div> -->
-                                <div class="replyList" style="padding-left: 1px; list-style: none;">
+                                <ul class="replyList" style="padding-left: 1px; list-style: none;">
                                 
-                                </div>
+                                </ul>
                             </div>
                         </div>
                     </section>
@@ -127,41 +121,140 @@
         <script th:inline="javascript">
         
         <!-- 댓글  -->
-     		$(document).ready(function() {
-     			var tnum = [[${dto.tnum}]];
-     			var replyLists = $(".replyList");
-     			
-     			showReplies();
-     		});
-     		
-     		//날짜 처리 함수
-     		function formatTime(str) {
-     			var date = new Date(str);
-     			
-     			return date.getFullYear() + '/' + 
-     				(date.getMonth() + 1) + '/' +
-     				date.getDate() + '/' + 
-     				date.getHours() + '/' + 
-     				date.getMinutes();
-     		}
-     		
-     		//댓글 목록
-     		function showReplies() {
-     			$.getJSON('/reply/travelrecord/' + tnum, fuction(arr) {
-     				console.log(arr);
-     				
-     				var str = "";
-     				
-     				$('.replycount').html("댓글 개수 " + arr.length);
-     				
-     				$.each(arr, function(idx, reply){
-     					console.log(reply);
-     					
-     				})
-     				
-     			})
-     		}
+        var tnum = [[${dto.tnum}]];
+        var rnum = $("input[name='rnum']").val();
+        var replyer = $('input[name="replyer"]').val();
+        var replyText = $('textarea[name="replyText"]').val();
         
+        
+  		$(document).ready(function() {
+  			showReplies();
+  		});
+  		
+  		//날짜 처리 함수
+  		function formatTime(str) {
+  			var date = new Date(str);
+  			
+  			return date.getFullYear() + '-' + 
+  				(date.getMonth() + 1) + '-' +
+  				date.getDate() + ' ' + 
+  				date.getHours() + ':' + 
+  				date.getMinutes();
+  		}
+  		
+  		//댓글 목록
+  		function showReplies() {
+			$.getJSON('/reply/travelrecord/' + tnum, function(arr) {
+				console.log(arr);
+				
+				var str = "";
+				
+				$('.replycount').html("댓글 개수 " + arr.length);
+				
+				$.each(arr, function(idx, reply){
+					console.log(reply);
+  					
+		  			str += "<li class='left clearfix' data-rnum='"+reply.rnum+"'>";
+					str += "	<div><span><strong id='replyer'>"+ reply.replyer +"</strong>";
+					str += "	<a href='javascript:void(0)' id='modifyReplyBtn' onclick='fnmodifyReply(" + reply.rnum + ", \"" + reply.replyer + "\", \"" + reply.replyText + "\");' style='padding-right:5px'>수정</a>";
+					str += "	<a href='javascript:void(0)' id='deleteReplyBtn' onclick='fndeleteReply(" + reply.rnum + ");'>삭제</a></span></div>";
+					str += "	<div id='writeDate'>"+ formatTime(reply.regDate) +"</div>";
+					str += "	<div id='replyText'>"+ reply.replyText +"</div><hr></li>";
+  					})
+  				$(".replyList").html(str);
+  			});
+  		}
+     	
+  		//댓글 등록
+  		$("#writeReplyBtn").click(function() {
+  			var reply = {tnum : tnum, 
+  					replyText : $('textarea[name="replyText"]').val(),
+  					replyer : $('input[name="replyer"]').val()}
+  			console.log(reply);
+  			
+  			$.ajax({
+  				url : '/reply/',
+  				method : 'post',
+  				data : JSON.stringify(reply), //reply를 json 문자열로 변환
+				contentType : 'application/json; charset=utf-8',
+				dataTpye : 'json',
+				success : function(data) {
+					console.log(data);
+					
+					var newRnum = parseInt(data);
+					
+					alert(newRnum +"번 댓글이 등록되었습니다.");
+					$("#newReplyer").val("");
+					$("#newReplyText").val("");
+					
+					showReplies();
+				}, error : function(error) {
+					console.log("에러 : " + error);
+				}
+  			})
+  		});
+     	
+  		//댓글 삭제
+  		function fndeleteReply(rnum) {
+  			
+  			$.ajax({
+  				url : "/reply/" + rnum,
+  				method : "delete",
+				success : function(result){
+					console.log("댓글 삭제 : " + result);
+					if(result === "success") {
+						alert("댓글이 삭제되었습니다.");
+						showReplies();
+					}
+				}, 
+				error : function(error) {
+					console.log("에러 : " + error);
+				}
+  			});
+  		}
+  		
+  		//댓글 수정 창
+  		function fnmodifyReply(rnum, replyer, replyText) {
+			var str="";
+			
+			str += "<li class='left clearfix' id='rnum' data-rnum='"+ rnum+"'>";
+			str += "	<div><span><strong id='replyer'>" + replyer + "</strong>";
+			str += "	<a href='javascript:void(0)' id='modifyReplyBtn' onclick='fnmodifySaveReply(" + rnum + ", \"" + replyer + "\")' style='padding-right:5px'>저장</a>";
+			str += "	<a href='javascript:void(0)' id='deleteReplyBtn' onclick='showReplies()'>취소</a></span></div>";
+			str += "	<textarea class='form-control' id='editText' rows='3'>"+replyText+"</textarea><hr></li>";
+		
+			$("#rnum" + rnum).replaceWith(str);
+			$("#rnum" + rnum + "#editText").focus();
+		}
+  		
+  		//진짜 수정
+		function fnmodifySaveReply(rnum, replyer) {
+			var editText = $('#editText').val();
+			var rnum = $("input[name='rnum']").val();
+	        var replyer = $('input[name="replyer"]').val();
+	        var replyText = $('textarea[name="replyText"]').val();
+	        
+			var reply= {rnum:rnum, replyText:editText, tnum:tnum, replyer : replyer};
+			
+			$.ajax({
+				type : 'put',
+				url : '/reply/' + rnum,
+				data : JSON.stringify(reply),
+				contentType : "application/json;charset=utf-8",
+				success : function(result) {
+					console.log("댓글 수정: " + result);
+					
+					if(result === "success") {
+						alert("댓글이 수정되었습니다.");
+						showReplies();
+					}
+				},
+				error : function(error) {
+					console.log("에러 : " + error);
+				}
+			});
+		}
+  		
         
      	</script>
 	</th:block>
