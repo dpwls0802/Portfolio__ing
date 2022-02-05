@@ -236,6 +236,8 @@
 	        
 			var reply= {rnum:rnum, replyText:editText, tnum:tnum, replyer : replyer};
 			
+			console.log(reply);
+			
 			$.ajax({
 				type : 'put',
 				url : '/reply/' + rnum,
