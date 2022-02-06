@@ -217,6 +217,7 @@
   		function fnmodifyReply(rnum, replyer, replyText) {
 			var str="";
 			
+			/* str += "<li class='left clearfix' id='rnum' data-rnum='"+ rnum+"'>"; */
 			str += "<li class='left clearfix' id='rnum' data-rnum='"+ rnum+"'>";
 			str += "	<div><span><strong id='replyer'>" + replyer + "</strong>";
 			str += "	<a href='javascript:void(0)' id='modifyReplyBtn' onclick='fnmodifySaveReply(" + rnum + ", \"" + replyer + "\")' style='padding-right:5px'>저장</a>";
@@ -239,7 +240,7 @@
 			console.log(reply);
 			
 			$.ajax({
-				type : 'put',
+				method : 'put',
 				url : '/reply/' + rnum,
 				data : JSON.stringify(reply),
 				contentType : "application/json;charset=utf-8",
