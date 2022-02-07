@@ -19,10 +19,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString(exclude = "travelrecord")
+/* @ToString(exclude = {"travelrecord", "user"}) */
 public class Reply extends BaseEntity {
 
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long rnum;
 
@@ -31,5 +31,10 @@ public class Reply extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Travelrecord travelrecord;
+	
+	/*
+	 * @ManyToOne(fetch = FetchType.LAZY) private User user;
+	 */
+
 
 }
