@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 
 import com.record.travel.entity.Travelrecord;
 import com.record.travel.entity.User;
@@ -16,11 +17,16 @@ import com.record.travel.entity.User;
 public class TravelrecordRepositoryTests {
 	@Autowired
 	private TravelrecordRepository travelrecordRepository;
+	
+	@Autowired
+	private TravelImageRepository travelImageRepository;
 
 	// 등록
+	@Commit
+	@Transactional
 	@Test
 	public void insertTravelrecord() {
-		IntStream.rangeClosed(101, 200).forEach(i -> {
+		IntStream.rangeClosed(1, 100).forEach(i -> {
 			User user = User.builder().email(i + "@abc.com").build();
 
 			Travelrecord travelrecord = Travelrecord.builder().title(i + "번째 제목").content(i + "번째 내용")
