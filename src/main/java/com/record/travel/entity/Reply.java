@@ -18,8 +18,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = "travelrecord")
-/* @ToString(exclude = {"travelrecord", "user"}) */
+@ToString(exclude = {"travelrecord", "replyer"}) 
 public class Reply extends BaseEntity {
 
 	@Id
@@ -27,14 +26,15 @@ public class Reply extends BaseEntity {
 	private Long rnum;
 
 	private String replyText;
-	private String replyer;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User replyer;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Travelrecord travelrecord;
 	
-	/*
-	 * @ManyToOne(fetch = FetchType.LAZY) private User user;
-	 */
-
+	public void changeReplyText(String replyText) {
+		this.replyText = replyText;
+	}
 
 }

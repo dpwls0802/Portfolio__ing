@@ -1,6 +1,7 @@
 package com.record.travel.repository;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
+import com.record.travel.entity.TravelImage;
 import com.record.travel.entity.Travelrecord;
 import com.record.travel.entity.User;
 
@@ -17,38 +19,55 @@ import com.record.travel.entity.User;
 public class TravelrecordRepositoryTests {
 	@Autowired
 	private TravelrecordRepository travelrecordRepository;
-	
+
 	@Autowired
 	private TravelImageRepository travelImageRepository;
 
-	// 등록
+	// 글 + 이미지 등록
 	@Commit
 	@Transactional
 	@Test
 	public void insertTravelrecord() {
 		IntStream.rangeClosed(1, 100).forEach(i -> {
+			// 사용자 이메일
 			User user = User.builder().email(i + "@abc.com").build();
 
-			Travelrecord travelrecord = Travelrecord.builder().title(i + "번째 제목").content(i + "번째 내용")
-					.writer(user).travelDate("2021-01-" + (i % 10) + " ~ 2021-02-0" + (i % 10)).build();
-			System.out.println(travelrecordRepository.save(travelrecord));
+			// 글
+			Travelrecord travelrecord = Travelrecord.builder().title(i + "번째 제목").content(i + "번째 내용").writer(user)
+					.travelDate("2021-01-0" + (i % 10) + " ~ 2021-02-0" + (i % 10)).build();
+			
+			System.out.println("---------------------------------");
+			// 글 등록
+			travelrecordRepository.save(travelrecord);
+			
+			//이미지
+			int count = (int) (Math.random() * 5) +  1;
+
+			for (int j = 0; j < count; j++) {
+				TravelImage travelImage = TravelImage.builder().uuid(UUID.randomUUID().toString())
+						.travelrecord(travelrecord).imageName("이미지" + j + ".jpg").build();
+				//이미지 등록
+				travelImageRepository.save(travelImage);
+			}
+			
+			System.out.println("----------------------------------");
 		});
 	}
 
 	// 조회
-	//@Transactional //지연 로딩을 적용해 User테이블과 연결이 끊김 -> 트랜잭션으로 처리해 다시 연결 
-	//@Test
+	// @Transactional //지연 로딩을 적용해 User테이블과 연결이 끊김 -> 트랜잭션으로 처리해 다시 연결
+	// @Test
 	public void selectTravelrecord() {
 		Long tnum = 100L;
 		Optional<Travelrecord> result = travelrecordRepository.findById(tnum);
-		
+
 		Travelrecord travelrecord = result.get();
 		System.out.println(travelrecord);
 		System.out.println(travelrecord.getWriter());
 	}
 
 	// 수정
-	//@Test
+	// @Test
 	/*
 	 * public void update() { Travelrecord travelrecord =
 	 * Travelrecord.builder().tnum(400L).title("제목 변경").content("내용 변경").
@@ -66,7 +85,7 @@ public class TravelrecordRepositoryTests {
 	}
 
 	// 전체 삭제
-	//@Test
+	// @Test
 	public void deleteAll() {
 		travelrecordRepository.deleteAll();
 	}

@@ -1,8 +1,6 @@
 package com.record.travel.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -20,10 +18,8 @@ import lombok.ToString;
 public class User extends BaseEntity{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long unum; //id 변경
-	
 	private String email;
+	
 	private String password;
 	private String name;
 }
