@@ -16,7 +16,7 @@ public class UserRepositoryTests {
 	
 	@Test
 	public void insertUsers() {
-		IntStream.rangeClosed(101, 200).forEach(i -> {
+		IntStream.rangeClosed(1, 100).forEach(i -> {
 			User user = User.builder().email(i + "@abc.com").password("1234").name("사용자"+i).build();
 			
 			userRepository.save(user);

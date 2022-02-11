@@ -30,8 +30,13 @@ public class TravelrecordRepositoryTests {
 	public void insertTravelrecord() {
 		IntStream.rangeClosed(1, 100).forEach(i -> {
 			// 사용자 이메일
+			/*
+			 * long email = ((long)(Math.random()*100) + 1);
+			 * 
+			 * User user = User.builder().email(email + "@abc.com").build();
+			 */
 			User user = User.builder().email(i + "@abc.com").build();
-
+			
 			// 글
 			Travelrecord travelrecord = Travelrecord.builder().title(i + "번째 제목").content(i + "번째 내용").writer(user)
 					.travelDate("2021-01-0" + (i % 10) + " ~ 2021-02-0" + (i % 10)).build();
