@@ -1,15 +1,16 @@
 package com.record.travel.repository;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-import javax.transaction.Transactional;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.record.travel.entity.TravelImage;
 import com.record.travel.entity.Travelrecord;
@@ -24,9 +25,9 @@ public class TravelrecordRepositoryTests {
 	private TravelImageRepository travelImageRepository;
 
 	// 글 + 이미지 등록
-	@Commit
-	@Transactional
-	@Test
+	//@Commit
+	//@Transactional
+	//@Test
 	public void insertTravelrecord() {
 		IntStream.rangeClosed(1, 100).forEach(i -> {
 			// 사용자 이메일
@@ -70,7 +71,19 @@ public class TravelrecordRepositoryTests {
 		System.out.println(travelrecord);
 		System.out.println(travelrecord.getWriter());
 	}
-
+	
+	//목록
+	@Test
+	public void list() {
+		PageRequest  pageRequest = PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "tnum"));
+		
+		Page<Object[]> result = travelrecordRepository.getTravelrecordList(pageRequest);
+		
+		for(Object[] objects : result.getContent()) {
+			System.out.println(Arrays.toString(objects));
+		}
+				
+	}
 	// 수정
 	// @Test
 	/*

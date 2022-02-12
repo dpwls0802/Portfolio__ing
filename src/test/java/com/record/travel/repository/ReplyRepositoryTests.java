@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.record.travel.entity.Reply;
 import com.record.travel.entity.Travelrecord;
+import com.record.travel.entity.User;
 
 @SpringBootTest
 public class ReplyRepositoryTests {
@@ -20,11 +21,18 @@ public class ReplyRepositoryTests {
 	@Test
 	public void insertReply() {
 		
-		IntStream.rangeClosed(301, 400).forEach(i -> {
-			long tnum = (long)(Math.random() * 100) + 100;
+		IntStream.rangeClosed(1, 200).forEach(i -> {
+			//게시글
+			long tnum = (long)(Math.random() * 100) + 1;
+			
 			Travelrecord travelrecord = Travelrecord.builder().tnum(tnum).build();
 			
-			Reply reply = Reply.builder().replyText(i+"번째 댓글 내용").replyer("게스트").travelrecord(travelrecord).build();
+			//댓글 작성자
+			long email = ((long)(Math.random() * 100) + 1);
+			 
+			User user = User.builder().email(email + "@abc.com").build();
+			
+			Reply reply = Reply.builder().replyText(i+"번째 댓글 내용").replyer(user).travelrecord(travelrecord).build();
 			replyRepository.save(reply);
 		});
 	}
