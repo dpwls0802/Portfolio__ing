@@ -31,9 +31,9 @@ public interface TravelrecordRepository extends JpaRepository<Travelrecord, Long
 	Object getTravelrecordByTnum(@Param("tnum") Long tnum);
 
 	// 목록 new
-	@Query("select t, ti, w, td, count(distinct r) from Travelrecord t "
+	@Query("select t, ti, w, count(distinct r) from Travelrecord t "
 			+ "left outer join t.writer w"
-			+ "left outer join t.travelDate td"
+			
 			+ "left outer join TravelImage ti on ti.travelrecord = t "
 			+ "left outer join Reply r on r.travelrecord = t "
 			+ "group by t")
