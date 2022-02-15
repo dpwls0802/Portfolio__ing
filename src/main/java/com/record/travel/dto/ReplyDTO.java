@@ -15,7 +15,10 @@ public class ReplyDTO {
 	
 	private Long rnum;
 	private String replyText;
-	private String replyer;
+	
+	private String replyerName;
+	private String replyerEmail;
+	
 	//글 번호
 	private Long tnum; 
 	private LocalDateTime regDate, modDate;

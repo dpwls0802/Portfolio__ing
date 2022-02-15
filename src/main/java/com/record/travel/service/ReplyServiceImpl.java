@@ -32,7 +32,7 @@ public class ReplyServiceImpl implements ReplyService {
 	public List<ReplyDTO> getList(Long tnum) {
 		List<Reply> result = replyRepository.getReplyByTravelrecord(Travelrecord.builder().tnum(tnum).build());
 		
-		return result.stream().map(reply -> entityToDTO(reply)).collect(Collectors.toList());
+		return result.stream().map(reply, user -> entityToDTO(reply, user)).collect(Collectors.toList());
 	}
 	
 	//수정
