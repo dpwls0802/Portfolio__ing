@@ -5,7 +5,6 @@ import java.util.List;
 import com.record.travel.dto.ReplyDTO;
 import com.record.travel.entity.Reply;
 import com.record.travel.entity.Travelrecord;
-import com.record.travel.entity.User;
 
 public interface ReplyService {
 
@@ -25,18 +24,16 @@ public interface ReplyService {
 	default Reply dtoToEntity(ReplyDTO replyDTO) {
 		Travelrecord travelrecord = Travelrecord.builder().tnum(replyDTO.getTnum()).build();
 		
-		User user = User.builder().email(replyDTO.getReplyerEmail()).build();
-
 		Reply reply = Reply.builder().rnum(replyDTO.getRnum()).replyText(replyDTO.getReplyText())
-				.replyer(user).travelrecord(travelrecord).build();
+				.replyer(replyDTO.getReplyer()).travelrecord(travelrecord).build();
 
 		return reply;
 	}
 
 	// entity -> DTO
-	default ReplyDTO entityToDTO(Reply reply, User user) {
+	default ReplyDTO entityToDTO(Reply reply) {
 		ReplyDTO replyDTO = ReplyDTO.builder().rnum(reply.getRnum()).replyText(reply.getReplyText())
-				.replyerName(user.getName()).replyerEmail(user.getEmail()).regDate(reply.getRegDate()).modDate(reply.getModDate()).build();
+				.replyer(reply.getReplyer()).regDate(reply.getRegDate()).modDate(reply.getModDate()).build();
 
 		return replyDTO;
 

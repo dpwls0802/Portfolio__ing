@@ -15,9 +15,7 @@ public class ReplyDTO {
 	
 	private Long rnum;
 	private String replyText;
-	
-	private String replyerName;
-	private String replyerEmail;
+	private String replyer;
 	
 	//글 번호
 	private Long tnum; 

@@ -5,12 +5,15 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
 import com.record.travel.entity.TravelImage;
 import com.record.travel.entity.Travelrecord;
@@ -25,17 +28,12 @@ public class TravelrecordRepositoryTests {
 	private TravelImageRepository travelImageRepository;
 
 	// 글 + 이미지 등록
-	//@Commit
-	//@Transactional
-	//@Test
+	@Commit
+	@Transactional
+	@Test
 	public void insertTravelrecord() {
 		IntStream.rangeClosed(1, 100).forEach(i -> {
-			// 사용자 이메일
-			/*
-			 * long email = ((long)(Math.random()*100) + 1);
-			 * 
-			 * User user = User.builder().email(email + "@abc.com").build();
-			 */
+			
 			User user = User.builder().email(i + "@abc.com").build();
 			
 			// 글
@@ -73,7 +71,7 @@ public class TravelrecordRepositoryTests {
 	}
 	
 	//목록
-	@Test
+	//@Test
 	public void list() {
 		PageRequest  pageRequest = PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "tnum"));
 		
