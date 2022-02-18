@@ -2,6 +2,8 @@ package com.record.travel.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -11,7 +13,11 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +33,7 @@ public class TravelImageController {
 	@Value("${com.record.travel.path.upload}")
 	private String uploadPath;
 	
+	//이미지 업로드
 	@PostMapping("/uploadImage")
 	public ResponseEntity<List<TravelImageDTO>> uploadImage(MultipartFile[] uploadImages) {
 		
@@ -37,7 +44,7 @@ public class TravelImageController {
 			//이미지 파일만 업로드 가능
 			if(uploadImage.getContentType().startsWith("image") == false) {
 				log.warn("---------이미지 파잃이 아닙니다!!-----------");
-				return;
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 			
 			//실제 이미지 파일 이름은 전체 경로 들어오기 땨문
@@ -64,8 +71,10 @@ public class TravelImageController {
 			}
 			
 		}
+		return new ResponseEntity<>(resultImageList, HttpStatus.OK);
 	}
 	
+	//폴더 만들기
 	private String makeFolder() {
 		String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 		String folderPath = str.replace("//", File.separator);
@@ -79,4 +88,28 @@ public class TravelImageController {
 		return folderPath;
 	}
 	
+	@GetMapping("/display")
+	public ResponseEntity<byte[]> getImage(String imageFileName) {
+		ResponseEntity<byte[]> result = null;
+		
+		try {
+			String srcImageFileName = URLDecoder.decode(imageFileName, "UTF-8");
+			log.info("이미지 파일 이름 : "+srcImageFileName);
+			
+			File file = new File(uploadPath + File.separator + srcImageFileName);
+			log.info("파일 : " + file);
+			
+			HttpHeaders header = new HttpHeaders();
+			
+			//MIME 타입 처리
+			header.add("Content-Type", Files.probeContentType(file.toPath()));
+			//파일 데이터 처리
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),header,HttpStatus.OK);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+		
+	}
 }
