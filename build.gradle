@@ -36,6 +36,9 @@ dependencies {
 
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+	
+	implementation 'net.coobird:thumbnailator:0.4.17'
+	
 }
 
 test {

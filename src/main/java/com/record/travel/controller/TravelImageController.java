@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.record.travel.dto.TravelImageDTO;
 
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @RestController
 @Log4j2
@@ -49,9 +50,9 @@ public class TravelImageController {
 			
 			//실제 이미지 파일 이름은 전체 경로 들어오기 땨문
 			String originalName = uploadImage.getOriginalFilename();
-			String imageFileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+			String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
 			
-			log.info("이미지 파일 이름 : " + imageFileName);
+			log.info("이미지 파일 이름 : " + fileName);
 			
 			//동일 폴더에 너무 많은 파일 넣으면 성능 저하 -> 년/월/일 폴더 생성해 분산시킴
 			String folderPath = makeFolder();
@@ -60,12 +61,24 @@ public class TravelImageController {
 			String uuid = UUID.randomUUID().toString();
 			
 			//저장할 파일 이름 중간에 "_"를 이용해 구분
-			String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + imageFileName;
+			String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
 			
 			Path savePath = Paths.get(saveName);
 			
 			try {
+				//원본 파일 저장
 				uploadImage.transferTo(savePath);
+				
+				//섬네일 생성
+				String thumbnailSavaName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid + "_" + fileName;
+				
+				//섬네일 파일 이름은 중간에 s_로 시작하도록
+				File thumbnailFile = new File(thumbnailSavaName);
+				
+				//섬네일 생성
+				Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
+				
+				resultImageList.add(new TravelImageDTO(fileName, uuid, folderPath));
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
