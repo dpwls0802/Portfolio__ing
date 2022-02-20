@@ -2,6 +2,7 @@ package com.record.travel.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -101,12 +102,13 @@ public class TravelImageController {
 		return folderPath;
 	}
 	
+	//이미지 보여주기
 	@GetMapping("/display")
-	public ResponseEntity<byte[]> getImage(String imageFileName) {
+	public ResponseEntity<byte[]> getImage(String fileName) {
 		ResponseEntity<byte[]> result = null;
 		
 		try {
-			String srcImageFileName = URLDecoder.decode(imageFileName, "UTF-8");
+			String srcImageFileName = URLDecoder.decode(fileName, "UTF-8");
 			log.info("이미지 파일 이름 : "+srcImageFileName);
 			
 			File file = new File(uploadPath + File.separator + srcImageFileName);
@@ -125,4 +127,30 @@ public class TravelImageController {
 		return result;
 		
 	}
+
+	//이미지 삭제하기
+	@PostMapping("/removeImage")
+	public ResponseEntity<Boolean> removeImage(String fileName) {
+		String srcImageFileName = null;
+		
+		try {
+			srcImageFileName = URLDecoder.decode(fileName, "UTF-8");
+			File file = new File(uploadPath + File.separator + srcImageFileName);
+			boolean result = file.delete();
+			
+			File thumbnail = new File(file.getParent(), "s_" + file.getName());
+			result = thumbnail.delete();
+			
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch(UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	
+	
+	
+	
 }
