@@ -51,9 +51,9 @@ public class TravelImageController {
 			
 			//실제 이미지 파일 이름은 전체 경로 들어오기 땨문
 			String originalName = uploadImage.getOriginalFilename();
-			String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+			String imageName = originalName.substring(originalName.lastIndexOf("\\") + 1);
 			
-			log.info("이미지 파일 이름 : " + fileName);
+			log.info("이미지 파일 이름 : " + imageName);
 			
 			//동일 폴더에 너무 많은 파일 넣으면 성능 저하 -> 년/월/일 폴더 생성해 분산시킴
 			String folderPath = makeFolder();
@@ -62,7 +62,7 @@ public class TravelImageController {
 			String uuid = UUID.randomUUID().toString();
 			
 			//저장할 파일 이름 중간에 "_"를 이용해 구분
-			String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
+			String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + imageName;
 			
 			Path savePath = Paths.get(saveName);
 			
@@ -71,7 +71,7 @@ public class TravelImageController {
 				uploadImage.transferTo(savePath);
 				
 				//섬네일 생성
-				String thumbnailSavaName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid + "_" + fileName;
+				String thumbnailSavaName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid + "_" + imageName;
 				
 				//섬네일 파일 이름은 중간에 s_로 시작하도록
 				File thumbnailFile = new File(thumbnailSavaName);
@@ -79,7 +79,7 @@ public class TravelImageController {
 				//섬네일 생성
 				Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
 				
-				resultImageList.add(new TravelImageDTO(fileName, uuid, folderPath));
+				resultImageList.add(new TravelImageDTO(imageName, uuid, folderPath));
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -104,11 +104,11 @@ public class TravelImageController {
 	
 	//이미지 보여주기
 	@GetMapping("/display")
-	public ResponseEntity<byte[]> getImage(String fileName) {
+	public ResponseEntity<byte[]> getImage(String imageName) {
 		ResponseEntity<byte[]> result = null;
 		
 		try {
-			String srcImageFileName = URLDecoder.decode(fileName, "UTF-8");
+			String srcImageFileName = URLDecoder.decode(imageName, "UTF-8");
 			log.info("이미지 파일 이름 : "+srcImageFileName);
 			
 			File file = new File(uploadPath + File.separator + srcImageFileName);
@@ -130,11 +130,11 @@ public class TravelImageController {
 
 	//이미지 삭제하기
 	@PostMapping("/removeImage")
-	public ResponseEntity<Boolean> removeImage(String fileName) {
+	public ResponseEntity<Boolean> removeImage(String imageName) {
 		String srcImageFileName = null;
 		
 		try {
-			srcImageFileName = URLDecoder.decode(fileName, "UTF-8");
+			srcImageFileName = URLDecoder.decode(imageName, "UTF-8");
 			File file = new File(uploadPath + File.separator + srcImageFileName);
 			boolean result = file.delete();
 			

@@ -1,6 +1,8 @@
 package com.record.travel.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,4 +27,7 @@ public class TravelrecordDTO {
 	private String writerName;
 	
 	private int replyCount;
+	
+	@Builder.Default
+	private List<TravelImageDTO> imageDTOList = new ArrayList<>();
 }

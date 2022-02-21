@@ -1,23 +1,26 @@
 package com.record.travel.dto;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class TravelImageDTO implements Serializable{
+@NoArgsConstructor
+@Builder
+public class TravelImageDTO  {
 	
-	private String fileName;
+	private String imageName;
 	private String uuid;
 	private String folderPath;
 	
 	public String getImageURL() {
 		try {
-			return URLEncoder.encode(folderPath+"/"+uuid+"_"+ fileName, "UTF-8");
+			return URLEncoder.encode(folderPath+"/"+uuid+"_"+ imageName, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -26,7 +29,7 @@ public class TravelImageDTO implements Serializable{
 	
 	public String getThumbnailURL() {
 		try {
-			return URLEncoder.encode(folderPath+"/s_"+uuid+"_" + fileName, "UTF-8");
+			return URLEncoder.encode(folderPath+"/s_"+uuid+"_" + imageName, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

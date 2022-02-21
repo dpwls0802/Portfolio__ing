@@ -1,5 +1,7 @@
 package com.record.travel.service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -12,9 +14,11 @@ import org.springframework.stereotype.Service;
 import com.record.travel.dto.PageRequestDTO;
 import com.record.travel.dto.PageResultDTO;
 import com.record.travel.dto.TravelrecordDTO;
+import com.record.travel.entity.TravelImage;
 import com.record.travel.entity.Travelrecord;
 import com.record.travel.entity.User;
 import com.record.travel.repository.ReplyRepository;
+import com.record.travel.repository.TravelImageRepository;
 import com.record.travel.repository.TravelrecordRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,19 +31,29 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 
 	private final TravelrecordRepository repository; // JPA 처리 위해 주입
 	private final ReplyRepository replyRepository;
-	
+	private final TravelImageRepository travelImageRepository;
+ 	
 	// 등록
 	@Override
 	public Long register(TravelrecordDTO dto) {
 		log.info("===============");
 		log.info(dto);
+		
+		Map<String, Object> entityMap = dtoToEntity(dto);
+		//Travelrecord entity = dtoToEntity(dto);
+		
+		Travelrecord travelrecord = (Travelrecord) entityMap.get("travelrecord");
+		List<TravelImage> travelImageList = (List<TravelImage>) entityMap.get("imageList");
 
-		Travelrecord entity = dtoToEntity(dto);
-		log.info(entity);
+		log.info(entityMap);
 
-		repository.save(entity);
+		repository.save(travelrecord);
+		
+		travelImageList.forEach(travelImage -> {
+			travelImageRepository.save(travelImage);
+		});
 
-		return entity.getTnum();
+		return travelrecord.getTnum();
 	}
 
 	// 목록
