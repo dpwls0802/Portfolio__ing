@@ -29,6 +29,25 @@
 			<textarea class="form-control" name="content" rows="2" cols="50"></textarea>
 		</div>
 		
+		<!-- 첨부파일  -->
+		<input name="uploadImages" type="file" multiple>
+		<button class="uploadBtn">등록</button>
+		
+		<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+		
+		<script>
+			$(".uploadBtn").click(function() {
+				var formData = new FormData();
+				var inputFile = $("input[type]='file'"]);
+				var files = inputFile[0].files;
+				
+				for(var i=0; i<files.length; i++) {
+					console.log(files[i]);
+					formData.append("uploadImages", files[i]);
+				}
+			});
+		</script>
+		
 		<!-- 버튼 -->
 		<div class="form-group">
 			<button class="btn" type="submit" id="registerBtn"style="background-color: yellow;">등록</button>
