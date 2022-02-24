@@ -81,6 +81,22 @@
 				}
 				divArea.append(str);
 			}
+			
+			$(".uploadResult").click(function(){
+				var target = $(this);
+				var imageName = target.data("name");
+				var targetDiv = $(this).closest("div");
+				
+				console.log(imageName);
+				
+				$.post('/removeImage', {imageName : imageName}, function(result){
+					console.log(result);
+					
+					if(result == true){
+						targetDiv.remove();
+					}
+				})
+			});
 		</script>
 		
 		<!-- 버튼 -->
