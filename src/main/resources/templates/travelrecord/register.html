@@ -30,46 +30,86 @@
 		</div>
 		
 		<!-- 첨부파일  -->
-		<input name="uploadImages" type="file" multiple>
-		<button class="uploadBtn">등록</button>
+		<div class="form-group">
+			<input name="uploadImages" type="file" multiple>
+			<label class="images" data-browse="Browse"></label>
+			<button class="uploadBtn">등록</button>
+			
+			
+			<div class="uploadImageResult">
 		
-		<div class="uploadResult">
-		
+			</div>
 		</div>
+		
 		<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 		
 		<script>
-			$(".uploadBtn").click(function() {
+		$(document).ready(function(e){
+			var regex = new RegExp("(.*?\.(exe|sh|zip|alz|tiff)$)");
+			var maxSize = 10485760;//10mb
+			
+			function checkExtension(imageName, fileSize) {
+				if(fileSize >= maxSize) {
+					alert("파일 사이즈 초과");
+					return false;
+				}
+				
+				if(regex.test(imageName)) {
+					alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+					return false;
+				}
+				return true;
+			}
+			
+			$(".uploadImages").on("change", function() {
+				var imageName = $(this).val().split("\\").pop();
+				$(this).siblings(".images").addClass("selected").html(imageName);
+				
 				var formData = new FormData();
 				var inputFile = $("input[type]='file'"]);
 				var files = inputFile[0].files;
+				var appended = false;
 				
 				for(var i=0; i<files.length; i++) {
+					if(!checkExtension(files[i].name, files[i], size)) {
+						return false;
+					}
 					console.log(files[i]);
 					formData.append("uploadImages", files[i]);
+					appended = true;
 				}
-				
-				$.ajax({
-					url: '/uploadImage',
-					type: 'POST',
-					processData: false,
-					contentType: false,
-					data: formData,
-					dataType: 'json',
-					success: function(result){
-						showUploadImaages(result);
-					},
-					error: function(jqXHR, textStatus, errorThrown) {
-						console.log(textStatus);
-					}
-				});
-				
+				 if(!appended) {return;}
+				 
+				 for(var value of formData.values()) {
+					 console.log(value);
+				 }
+				 
+				 $.ajax({
+						url: '/uploadImage',
+						type: 'POST',
+						processData: false,
+						contentType: false,
+						data: formData,
+						dataType: 'json',
+						success: function(result){
+							showUploadImaages(result);
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log(textStatus);
+						}
+					});
 			});
+			
+		});
+			
+				
+				
+				
 			
 			function showUploadImages(arr) {
 				console.log(arr);
 				
-				var divArea = $(".uploadResult");
+				var divArea = $(".uploadImageResult");
 				
 				var str ="";
 				
@@ -82,7 +122,7 @@
 				divArea.append(str);
 			}
 			
-			$(".uploadResult").click(function(){
+			$(".uploadImageResult").click(function(){
 				var target = $(this);
 				var imageName = target.data("name");
 				var targetDiv = $(this).closest("div");
