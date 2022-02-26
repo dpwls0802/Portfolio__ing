@@ -37,7 +37,9 @@
 			
 			
 			<div class="uploadImageResult">
-		
+				<ul>
+				
+				</ul>
 			</div>
 		</div>
 		
@@ -109,9 +111,16 @@
 			function showUploadImages(arr) {
 				console.log(arr);
 				
-				var divArea = $(".uploadImageResult");
+				var divArea = $(".uploadImageResult ul");
 				
 				var str ="";
+				
+				$(arr).each(function(i, obj) {
+					str += "<li data-name'" + obj.imageName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid "'>";
+					str += "<div>";
+					str += 
+				
+				})
 				
 				for(var i=0; i<arr.length; i++) {
 					str += "<div>";
