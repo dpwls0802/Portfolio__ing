@@ -33,8 +33,6 @@
 		<div class="form-group">
 			<input name="uploadImages" type="file" multiple>
 			<label class="images" data-browse="Browse"></label>
-			<button class="uploadBtn">등록</button>
-			
 			
 			<div class="uploadImageResult">
 				<ul>
@@ -68,7 +66,7 @@
 				$(this).siblings(".images").addClass("selected").html(imageName);
 				
 				var formData = new FormData();
-				var inputFile = $("input[type]='file'"]);
+				var inputFile = $(this);
 				var files = inputFile[0].files;
 				var appended = false;
 				
@@ -116,19 +114,19 @@
 				var str ="";
 				
 				$(arr).each(function(i, obj) {
-					str += "<li data-name'" + obj.imageName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid "'>";
+					str += "<li data-name'" + obj.imageName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'>";
 					str += "<div>";
-					str += 
-				
-				})
-				
-				for(var i=0; i<arr.length; i++) {
-					str += "<div>";
-					str += "<img src='/display?imageName="arr[i].thumbnailURL+"'>";
-					str += "<button class='removeBtn' data-name='"arr[i].imageURL+"'>삭제</button>";
+					str += "<button type='button' data-file=\'" + obj.imageURL + "\' "
+					str += "class='btn'>X</button><br>";
+					str += "<img src='/display?imageName=" + obj.thumbnailURL + "'>";
 					str += "</div>";
-				}
+					str += "</li>";
+				
+				});
+				
 				divArea.append(str);
+				
+			
 			}
 			
 			$(".uploadImageResult").click(function(){
@@ -158,6 +156,36 @@
 		</div>
 	</form>
      
+     <style>
+     	.uploadImageResult {
+     		width: 100%;
+     		background-color: gray;
+     		margin-top: 10px;
+     	}
+     	
+     	.uplaodImageResult ul {
+     		display : flex;
+     		flex-flow: row;
+     		justify-content: center;
+     		align-items: center;
+     		vertical-align: top;
+     		overflow: auto;
+     			
+     	}
+     	
+     	.uplaodImageResult ul li {
+     		list-style: none;
+     		padding: 10px;
+     		margin-left: 2em;
+     	}
+     	
+     	.uplaodImageResult ul li img {
+     		width: 100%;
+     	}
+     	
+     	
+     	
+      </style>
      <script th:inline="javascript">
      	var registerForm = $("form");
      	

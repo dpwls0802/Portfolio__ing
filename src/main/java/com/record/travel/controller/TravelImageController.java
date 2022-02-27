@@ -32,7 +32,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j2
 public class TravelImageController {
 	
-	@Value("${com.record.travel.path.upload}")
+	@Value("${com.record.travel.upload.path}")
 	private String uploadPath;
 	
 	//이미지 업로드
