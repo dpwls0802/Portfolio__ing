@@ -101,9 +101,6 @@
 			});
 			
 		});
-			
-				
-				
 				
 			
 			function showUploadImages(arr) {
@@ -143,6 +140,28 @@
 						targetDiv.remove();
 					}
 				})
+			});
+			
+			$(".uploadImageResult").click("li button", function(e) {
+				console.log("delete file");
+				
+				var targetFile = $(this).data("file");
+				var targetLit = $(this).cloesest("li")l
+				
+				$.ajax({
+					url: '/removeFile',
+					data: {imageName: targetFile},
+					dataType: 'text',
+					type: 'post',
+					success: function(result) {
+						alert(result);
+						targetLi.remove();
+					}
+					
+				});
+				
+				
+				
 			});
 		</script>
 		
