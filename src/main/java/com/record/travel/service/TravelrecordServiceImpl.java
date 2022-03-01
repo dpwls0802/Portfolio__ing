@@ -34,6 +34,7 @@ public class TravelrecordServiceImpl implements TravelrecordService {
 	private final TravelImageRepository travelImageRepository;
  	
 	// 등록
+	@Transactional
 	@Override
 	public Long register(TravelrecordDTO dto) {
 		log.info("===============");

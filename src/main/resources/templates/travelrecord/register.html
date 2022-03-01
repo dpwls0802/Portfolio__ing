@@ -71,7 +71,7 @@
 				var appended = false;
 				
 				for(var i=0; i<files.length; i++) {
-					if(!checkExtension(files[i].name, files[i], size)) {
+					if(!checkExtension(files[i].name, files[i].size)) {
 						return false;
 					}
 					console.log(files[i]);
@@ -92,6 +92,7 @@
 						data: formData,
 						dataType: 'json',
 						success: function(result){
+							console.log(result);
 							showUploadImaages(result);
 						},
 						error: function(jqXHR, textStatus, errorThrown) {
