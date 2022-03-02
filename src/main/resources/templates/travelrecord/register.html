@@ -93,7 +93,7 @@
 						dataType: 'json',
 						success: function(result){
 							console.log(result);
-							showUploadImaages(result);
+							showUploadImages(result);
 						},
 						error: function(jqXHR, textStatus, errorThrown) {
 							console.log(textStatus);
@@ -147,7 +147,7 @@
 				console.log("delete file");
 				
 				var targetFile = $(this).data("file");
-				var targetLit = $(this).cloesest("li")l
+				var targetLit = $(this).cloesest("li");
 				
 				$.ajax({
 					url: '/removeFile',
