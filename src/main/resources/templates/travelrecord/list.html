@@ -27,6 +27,8 @@
 							<a th:href="@{/travelrecord/read(tnum= ${dto.tnum}, page=${result.page})}">
 								<img class="card-img-top"
 								src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+								<!-- <img th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0].path != null}"
+								th:src="|/display?imageName=${dto.imageDTOList[0].getThumbnail()}|" > -->
 							</a>
 							
 							<!-- 디테일  -->
