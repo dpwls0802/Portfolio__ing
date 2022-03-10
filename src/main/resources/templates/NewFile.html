@@ -6,6 +6,7 @@
 </head>
 <body>
 	<!-- 첨부파일  -->
+	<form>
 		<div class="form-group">
 			<input name="uploadImages" type="file" multiple>
 			<!-- label class="images" data-browse="Browse"></label> -->
@@ -21,9 +22,110 @@
 				
 			</div>
 		</div>
+	</form>
 		
 		<script src="https://code.jquery.com/jquery-3.6.0.js" 
 		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 		 crossorigin="anonymous"></script>
+		 
+		 <script>
+	
+			
+			$(".uploadBtn").on("click", function() {
+				
+				
+				var formData = new FormData();
+				var inputFile = $("input[type]='file']");
+				var files = inputFile[0].files;
+				var appended = false;
+				
+				for(var i=0; i<files.length; i++) {
+					
+					console.log(files[i]);
+					formData.append("uploadImages", files[i]);
+				}
+				 
+				 $.ajax({
+						url: '/uploadImage',
+						type: 'POST',
+						processData: false,
+						contentType: false,
+						data: formData,
+						dataType: 'json',
+						success: function(result){
+							console.log(result);
+							showUploadImages(result);
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log(textStatus);
+						}
+					});
+			});
+			
+		
+				
+			
+			function showUploadImages(arr) {
+				console.log(arr);
+				
+				var divArea = $(".uploadImageResult ul");
+				
+				var str ="";
+				
+				$(arr).each(function(i, obj) {
+					str += "<li data-name'" + obj.imageName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'>";
+					str += "<div>";
+					str += "<button type='button' data-file=\'" + obj.imageURL + "\' "
+					str += "class='btn'>X</button><br>";
+					str += "<img src='/display?imageName=" + obj.thumbnailURL + "'>";
+					str += "</div>";
+					str += "</li>";
+				
+				});
+				
+				divArea.append(str);
+				
+			
+			}
+			
+			$(".uploadImageResult").click(function(){
+				var target = $(this);
+				var imageName = target.data("name");
+				var targetDiv = $(this).closest("div");
+				
+				console.log(imageName);
+				
+				$.post('/removeImage', {imageName : imageName}, function(result){
+					console.log(result);
+					
+					if(result == true){
+						targetDiv.remove();
+					}
+				})
+			});
+			
+			$(".uploadImageResult").click("li button", function(e) {
+				console.log("delete file");
+				
+				var targetFile = $(this).data("file");
+				var targetLit = $(this).cloesest("li");
+				
+				$.ajax({
+					url: '/removeFile',
+					data: {imageName: targetFile},
+					dataType: 'text',
+					type: 'post',
+					success: function(result) {
+						alert(result);
+						targetLi.remove();
+					}
+					
+				});
+				
+				$()
+				
+				
+			});
+		</script>
 </body>
 </html>
